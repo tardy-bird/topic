@@ -20,7 +20,7 @@ public interface TopicMapper {
      * @return a topic
      */
     @Select("select id,gmt_create,gmt_modified,is_deleted,pic_url_list,content " +
-            "from topic where id=#{id}")
+            "from topic where id=#{id} and is_deleted=0 ")
     @Results(id = "topic", value = {
             @Result(property = "id", column = "id", javaType = Integer.class),
             @Result(property = "gmtCreate", column = "gmt_create", javaType = LocalDateTime.class),
@@ -48,7 +48,7 @@ public interface TopicMapper {
      */
     @Update("update topic " +
             "set gmt_create=#{gmtCreate},gmt_modified=#{gmtModified},is_deleted=#{beDeleted}," +
-            "pic_url_list=#{picUrlList},content=#{content} where id=#{id}")
+            "pic_url_list=#{picUrlList},content=#{content} where id=#{id} and is_deleted=0 ")
     void updateTopic(Topic topic);
 
     /**
@@ -56,6 +56,6 @@ public interface TopicMapper {
      *
      * @param topic topic object
      */
-    @Update("delete from topic where id=#{id}")
+    @Update("update topic set is_deleted=1 where id=#{id}")
     void deleteTopic(Topic topic);
 }

@@ -33,7 +33,7 @@ public class TopicServiceTests {
     @Test
     void updateTopic() {
         Topic topic = new Topic();
-        topic.setId(2);
+        topic.setId(3);
         topic.setContent("This is NEW content.");
         topicService.updateTopic(topic);
     }
@@ -41,7 +41,7 @@ public class TopicServiceTests {
     @Test
     void deleteTopic() {
         Topic topic = new Topic();
-        topic.setId(2);
+        topic.setId(1);
         topicService.deleteTopic(topic);
     }
 
