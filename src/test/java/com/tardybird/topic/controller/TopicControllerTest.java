@@ -58,10 +58,6 @@ class TopicControllerTest {
     }
 
     @Test
-    void read() {
-    }
-
-    @Test
     void update() {
     }
 
