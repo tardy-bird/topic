@@ -23,7 +23,7 @@ public class TopicServiceTests {
     }
 
     @Test
-    void create() {
+    void createTopic() {
         Topic topic = new Topic();
         topic.setPicUrlList("https://i2.cdn.turner.com/money/dam/assets/131004085738-ana28-dicks-sporting-goods-780x439.jpg");
         topic.setContent("This is new topic.");
@@ -31,11 +31,20 @@ public class TopicServiceTests {
     }
 
     @Test
-    void delete() {
+    void updateTopic() {
+        Topic topic = new Topic();
+        topic.setId(2);
+        topic.setContent("This is NEW content.");
+        topicService.updateTopic(topic);
+    }
+
+    @Test
+    void deleteTopic() {
         Topic topic = new Topic();
         topic.setId(2);
         topicService.deleteTopic(topic);
     }
+
 
 }
 
