@@ -33,6 +33,7 @@ public class TopicController {
                        @RequestParam(defaultValue = "10") Integer limit,
                        @RequestParam(defaultValue = "add_time") String sort,
                        @RequestParam(defaultValue = "desc") String order) {
+        // TODO
         return null;
     }
 
@@ -48,26 +49,45 @@ public class TopicController {
     }
 
     /**
-     * 相关专题
+     * 用户获取专题的相关专题
      *
      * @param id 专题ID
      * @return 相关专题
      */
     @GetMapping("/{id}/related")
     public Object related(@NotNull @PathVariable Integer id) {
+        //TODO
         return null;
     }
 
 
+    /**
+     * 管理员查询专题
+     *
+     * @param title    xxx
+     * @param subtitle xxx
+     * @param page     xxx
+     * @param limit    xxx
+     * @param sort     xxx
+     * @param order    xxx
+     * @return xxx
+     */
     @GetMapping
     public Object list(String title, String subtitle,
                        @RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit,
                        @RequestParam(defaultValue = "add_time") String sort,
                        @RequestParam(defaultValue = "desc") String order) {
+        // TODO
         return null;
     }
 
+    /**
+     * 管理员添加专题
+     *
+     * @param topic xxx
+     * @return xxx
+     */
     @PostMapping
     public Object create(@RequestBody Topic topic) {
         if (topic == null) {
@@ -81,6 +101,13 @@ public class TopicController {
     }
 
 
+    /**
+     * 管理员编辑专题
+     *
+     * @param topic xxx
+     * @param id    xxx
+     * @return xxx
+     */
     @PutMapping("/{id}")
     public Object update(@RequestBody Topic topic, @PathVariable Integer id) {
         if (topic == null) {
@@ -91,6 +118,13 @@ public class TopicController {
         return ResponseUtil.ok();
     }
 
+    /**
+     * 管理员删除专题
+     *
+     * @param topic xxx
+     * @param id    xxx
+     * @return xxx
+     */
     @DeleteMapping("/{id}")
     public Object delete(@RequestBody Topic topic, @PathVariable Integer id) {
         if (topic == null) {
@@ -98,7 +132,7 @@ public class TopicController {
         }
         topic.setId(id);
         topicService.deleteTopic(topic);
-        return ResponseUtil.ok();
+        return ResponseUtil.ok(topic);
     }
 
 }
