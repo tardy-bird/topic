@@ -1,5 +1,6 @@
 package com.tardybird.topic.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.tardybird.topic.domain.Topic;
 import com.tardybird.topic.service.impl.TopicServiceImpl;
 import com.tardybird.topic.util.ResponseUtil;
@@ -45,7 +46,8 @@ public class TopicController {
      */
     @GetMapping("/{id}")
     public Object detail(@NotNull @PathVariable Integer id) {
-        return topicService.getTopicDetail(id);
+        Topic topic = topicService.getTopicDetail(id);
+        return ResponseUtil.ok(topic);
     }
 
     /**
@@ -79,6 +81,7 @@ public class TopicController {
                        @RequestParam(defaultValue = "add_time") String sort,
                        @RequestParam(defaultValue = "desc") String order) {
         // TODO
+        PageHelper.startPage(page, limit);
         return null;
     }
 
