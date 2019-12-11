@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author nick
@@ -31,6 +32,15 @@ public interface TopicMapper {
     })
     Topic getTopicDetail(Integer id);
 
+    /**
+     * x
+     *
+     * @return x
+     */
+    @Select("select id,gmt_create,gmt_modified,is_deleted,pic_url_list,content " +
+            "from topic where is_deleted=0 ")
+    @ResultMap(value = "topic")
+    List<Topic> getTopics();
 
     /**
      * add topic
