@@ -1,6 +1,5 @@
 package com.tardybird.topic.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.tardybird.topic.domain.Topic;
 import com.tardybird.topic.service.impl.TopicServiceImpl;
 import com.tardybird.topic.util.ResponseUtil;
@@ -12,7 +11,7 @@ import javax.validation.constraints.NotNull;
  * @author nick
  */
 @RestController
-@RequestMapping("/topics")
+@RequestMapping("/topicsService")
 public class TopicController {
 
     private final
@@ -23,7 +22,7 @@ public class TopicController {
     }
 
     /**
-     * 专题列表
+     * 用户获取专题列表
      *
      * @param page  分页页数
      * @param limit 分页大小
@@ -31,15 +30,16 @@ public class TopicController {
      */
     @GetMapping("/")
     public Object list(@RequestParam(defaultValue = "1") Integer page,
-                       @RequestParam(defaultValue = "10") Integer limit,
-                       @RequestParam(defaultValue = "add_time") String sort,
-                       @RequestParam(defaultValue = "desc") String order) {
-        // TODO
-        return null;
+                       @RequestParam(defaultValue = "10") Integer limit) {
+        if (page == null || limit == null || page < 0 || limit < 0) {
+            return ResponseUtil.badArgument();
+        }
+        Object object = topicService.getTopics(page, limit);
+        return ResponseUtil.ok(object);
     }
 
     /**
-     * 专题详情
+     * 用户获取专题详情
      *
      * @param id 专题ID
      * @return 专题详情
@@ -70,18 +70,13 @@ public class TopicController {
      * @param subtitle xxx
      * @param page     xxx
      * @param limit    xxx
-     * @param sort     xxx
-     * @param order    xxx
      * @return xxx
      */
     @GetMapping
     public Object list(String title, String subtitle,
                        @RequestParam(defaultValue = "1") Integer page,
-                       @RequestParam(defaultValue = "10") Integer limit,
-                       @RequestParam(defaultValue = "add_time") String sort,
-                       @RequestParam(defaultValue = "desc") String order) {
+                       @RequestParam(defaultValue = "10") Integer limit) {
         // TODO
-        PageHelper.startPage(page, limit);
         return null;
     }
 
