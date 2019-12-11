@@ -1,9 +1,13 @@
 package com.tardybird.topic.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tardybird.topic.domain.Topic;
 import com.tardybird.topic.mapper.TopicMapper;
 import com.tardybird.topic.service.TopicService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author nick
@@ -21,6 +25,13 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public Topic getTopicDetail(Integer id) {
         return topicMapper.getTopicDetail(id);
+    }
+
+    @Override
+    public Object getTopics(Integer page, Integer limit) {
+        PageHelper.startPage(page, limit);
+        List<Topic> topics = topicMapper.getTopics();
+        return new PageInfo<>(topics);
     }
 
     @Override
