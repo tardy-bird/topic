@@ -16,6 +16,15 @@ public interface TopicService {
     Topic getTopicDetail(Integer id);
 
     /**
+     * xx
+     *
+     * @param page  x
+     * @param limit x
+     * @return x
+     */
+    Object getTopics(Integer page, Integer limit);
+
+    /**
      * add topic
      *
      * @param topic object
