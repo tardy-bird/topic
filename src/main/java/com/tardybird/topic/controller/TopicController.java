@@ -1,6 +1,7 @@
 package com.tardybird.topic.controller;
 
 import com.tardybird.topic.domain.Topic;
+import com.tardybird.topic.po.TopicPo;
 import com.tardybird.topic.service.impl.TopicServiceImpl;
 import com.tardybird.topic.util.ResponseUtil;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class TopicController {
      * @param limit 分页大小
      * @return 专题列表
      */
-    @GetMapping("/")
+    @GetMapping("/topics")
     public Object list(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit) {
         if (page == null || limit == null || page < 0 || limit < 0) {
@@ -44,41 +45,12 @@ public class TopicController {
      * @param id 专题ID
      * @return 专题详情
      */
-    @GetMapping("/{id}")
+    @GetMapping("/topics/{id}")
     public Object detail(@NotNull @PathVariable Integer id) {
-        Topic topic = topicService.getTopicDetail(id);
+        TopicPo topic = topicService.getTopicDetail(id);
         return ResponseUtil.ok(topic);
     }
 
-    /**
-     * 用户获取专题的相关专题
-     *
-     * @param id 专题ID
-     * @return 相关专题
-     */
-    @GetMapping("/{id}/related")
-    public Object related(@NotNull @PathVariable Integer id) {
-        //TODO
-        return null;
-    }
-
-
-    /**
-     * 管理员查询专题
-     *
-     * @param title    xxx
-     * @param subtitle xxx
-     * @param page     xxx
-     * @param limit    xxx
-     * @return xxx
-     */
-    @GetMapping
-    public Object list(String title, String subtitle,
-                       @RequestParam(defaultValue = "1") Integer page,
-                       @RequestParam(defaultValue = "10") Integer limit) {
-        // TODO
-        return null;
-    }
 
     /**
      * 管理员添加专题
@@ -86,7 +58,7 @@ public class TopicController {
      * @param topic xxx
      * @return xxx
      */
-    @PostMapping
+    @PostMapping("/topics")
     public Object create(@RequestBody Topic topic) {
         if (topic == null) {
             return ResponseUtil.fail();
@@ -106,7 +78,7 @@ public class TopicController {
      * @param id    xxx
      * @return xxx
      */
-    @PutMapping("/{id}")
+    @PutMapping("/topics/{id}")
     public Object update(@RequestBody Topic topic, @PathVariable Integer id) {
         if (topic == null) {
             return ResponseUtil.fail();
@@ -119,15 +91,12 @@ public class TopicController {
     /**
      * 管理员删除专题
      *
-     * @param topic xxx
-     * @param id    xxx
+     * @param id xxx
      * @return xxx
      */
-    @DeleteMapping("/{id}")
-    public Object delete(@RequestBody Topic topic, @PathVariable Integer id) {
-        if (topic == null) {
-            return ResponseUtil.fail();
-        }
+    @DeleteMapping("/topics/{id}")
+    public Object delete(@PathVariable Integer id) {
+        Topic topic = new Topic();
         topic.setId(id);
         topicService.deleteTopic(topic);
         return ResponseUtil.ok(topic);
