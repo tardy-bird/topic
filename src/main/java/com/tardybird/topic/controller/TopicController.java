@@ -1,7 +1,6 @@
 package com.tardybird.topic.controller;
 
 import com.tardybird.topic.domain.Topic;
-import com.tardybird.topic.po.TopicPo;
 import com.tardybird.topic.service.impl.TopicServiceImpl;
 import com.tardybird.topic.util.ResponseUtil;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +46,7 @@ public class TopicController {
      */
     @GetMapping("/topics/{id}")
     public Object detail(@NotNull @PathVariable Integer id) {
-        TopicPo topic = topicService.getTopicDetail(id);
+        Topic topic = topicService.getTopicDetail(id);
         return ResponseUtil.ok(topic);
     }
 
