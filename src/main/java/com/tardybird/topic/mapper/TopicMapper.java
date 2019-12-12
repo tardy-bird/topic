@@ -1,6 +1,6 @@
 package com.tardybird.topic.mapper;
 
-import com.tardybird.topic.domain.Topic;
+import com.tardybird.topic.po.TopicPo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +30,7 @@ public interface TopicMapper {
             @Result(property = "picUrlList", column = "pic_url_list", javaType = String.class),
             @Result(property = "content", column = "content", javaType = String.class),
     })
-    Topic getTopicDetail(Integer id);
+    TopicPo getTopicDetail(Integer id);
 
     /**
      * x
@@ -40,7 +40,7 @@ public interface TopicMapper {
     @Select("select id,gmt_create,gmt_modified,is_deleted,pic_url_list,content " +
             "from topic where is_deleted=0 ")
     @ResultMap(value = "topic")
-    List<Topic> getTopics();
+    List<TopicPo> getTopics();
 
     /**
      * add topic
@@ -49,7 +49,7 @@ public interface TopicMapper {
      */
     @Insert("insert into topic(gmt_create,gmt_modified,is_deleted,pic_url_list,content)" +
             "values(now(),now(),0,#{picUrlList},#{content})")
-    void addTopic(Topic topic);
+    void addTopic(TopicPo topic);
 
     /**
      * xxx
@@ -59,7 +59,7 @@ public interface TopicMapper {
     @Update("update topic " +
             "set gmt_create=#{gmtCreate},gmt_modified=#{gmtModified},is_deleted=#{beDeleted}," +
             "pic_url_list=#{picUrlList},content=#{content} where id=#{id} and is_deleted=0 ")
-    void updateTopic(Topic topic);
+    void updateTopic(TopicPo topic);
 
     /**
      * xxx
@@ -67,5 +67,5 @@ public interface TopicMapper {
      * @param topic topic object
      */
     @Update("update topic set is_deleted=1 where id=#{id}")
-    void deleteTopic(Topic topic);
+    void deleteTopic(TopicPo topic);
 }
