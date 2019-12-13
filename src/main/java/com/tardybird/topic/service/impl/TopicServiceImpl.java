@@ -6,7 +6,7 @@ import com.tardybird.topic.domain.Topic;
 import com.tardybird.topic.mapper.TopicMapper;
 import com.tardybird.topic.po.TopicPo;
 import com.tardybird.topic.service.TopicService;
-import com.tardybird.topic.util.ObjectTransfer;
+import com.tardybird.topic.util.ObjectConversion;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class TopicServiceImpl implements TopicService {
     public Topic getTopicDetail(Integer id) {
         TopicPo topicPo = topicMapper.getTopicDetail(id);
 
-        Topic topic = ObjectTransfer.topicPo2Topic(topicPo);
+        Topic topic = ObjectConversion.topicPo2Topic(topicPo);
 
         // 图片URL已经隐含在picUrlList中
         topic.setPictures(null);
@@ -45,7 +45,7 @@ public class TopicServiceImpl implements TopicService {
         List<Topic> topics = new ArrayList<>();
 
         for (TopicPo topicPo : topicPos) {
-            Topic topic = ObjectTransfer.topicPo2Topic(topicPo);
+            Topic topic = ObjectConversion.topicPo2Topic(topicPo);
             topic.setPictures(null);
 
             topics.add(topic);
@@ -56,19 +56,19 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public void addTopic(Topic topic) {
-        TopicPo topicPo = ObjectTransfer.topic2TopicPo(topic);
+        TopicPo topicPo = ObjectConversion.topic2TopicPo(topic);
         topicMapper.addTopic(topicPo);
     }
 
     @Override
     public void updateTopic(Topic topic) {
-        TopicPo topicPo = ObjectTransfer.topic2TopicPo(topic);
+        TopicPo topicPo = ObjectConversion.topic2TopicPo(topic);
         topicMapper.updateTopic(topicPo);
     }
 
     @Override
     public void deleteTopic(Topic topic) {
-        TopicPo topicPo = ObjectTransfer.topic2TopicPo(topic);
+        TopicPo topicPo = ObjectConversion.topic2TopicPo(topic);
         topicMapper.deleteTopic(topicPo);
     }
 

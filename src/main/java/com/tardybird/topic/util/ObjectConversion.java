@@ -6,7 +6,7 @@ import com.tardybird.topic.po.TopicPo;
 /**
  * @author nick
  */
-public class ObjectTransfer {
+public class ObjectConversion {
 
     public static Topic topicPo2Topic(TopicPo topicPo) {
         Topic topic = new Topic();
