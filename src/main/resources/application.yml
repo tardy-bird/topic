@@ -6,3 +6,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 server:
   port: 8090
+
+mybatis:
+  type-aliases-package: com.tardybird.topic.po
+  mapper-locations: classpath:mapper/*.xml

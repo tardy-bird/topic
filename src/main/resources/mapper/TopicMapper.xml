@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tardybird.topic.mapper.TopicMapper">
+    <resultMap id="TopicPo" type="com.tardybird.topic.po.TopicPo">
+        <result property="id" column="id"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="beDeleted" column="is_deleted"/>
+        <result property="picUrlList" column="pic_url_list"/>
+        <result property="content" column="content"/>
+    </resultMap>
+
+    <update id="updateTopic" parameterType="TopicPo">
+        update oomall_topic
+        <set>
+            <if test="picUrlList!=null">
+                pic_url_list=#{picUrlList},
+            </if>
+            <if test="content!=null">
+                content=#{content},
+            </if>
+            <if test="true">
+                gmt_modified=current_timestamp
+            </if>
+        </set>
+        where id=#{id} and is_deleted=0
+    </update>
+</mapper>

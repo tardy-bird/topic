@@ -46,11 +46,7 @@ public class TopicServiceTests {
 
     @Test
     void deleteTopic() {
-        TopicPo topicPo = new TopicPo();
-        topicPo.setId(1);
-
-        Topic topic = ObjectConversion.topicPo2Topic(topicPo);
-        topicService.deleteTopic(topic);
+        topicService.deleteTopic(1);
     }
 
 

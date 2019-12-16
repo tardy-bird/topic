@@ -1,6 +1,7 @@
 package com.tardybird.topic.controller;
 
 import com.tardybird.topic.domain.Topic;
+import com.tardybird.topic.po.TopicPo;
 import com.tardybird.topic.service.impl.TopicServiceImpl;
 import com.tardybird.topic.util.ResponseUtil;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,6 @@ import javax.validation.constraints.NotNull;
  * @author nick
  */
 @RestController
-@RequestMapping("/topicsService")
 public class TopicController {
 
     private final
@@ -46,6 +46,10 @@ public class TopicController {
      */
     @GetMapping("/topics/{id}")
     public Object detail(@NotNull @PathVariable Integer id) {
+        if(id<=0)
+        {
+            return ResponseUtil.badArgumentValue();
+        }
         Topic topic = topicService.getTopicDetail(id);
         return ResponseUtil.ok(topic);
     }
@@ -54,18 +58,18 @@ public class TopicController {
     /**
      * 管理员添加专题
      *
-     * @param topic xxx
+     * @param topicPo xxx
      * @return xxx
      */
     @PostMapping("/topics")
-    public Object create(@RequestBody Topic topic) {
-        if (topic == null) {
+    public Object create(@RequestBody TopicPo topicPo) {
+        if (topicPo == null) {
             return ResponseUtil.fail();
         }
-        if (topic.getPicUrlList() == null || topic.getContent() == null) {
-            return ResponseUtil.badArgument();
-        }
-        topicService.addTopic(topic);
+//        if (topicPo.getPicUrlList() == null || topicPo.getContent() == null) {
+//            return ResponseUtil.badArgument();
+//        }
+        topicService.addTopic(topicPo);
         return ResponseUtil.ok();
     }
 
@@ -73,17 +77,17 @@ public class TopicController {
     /**
      * 管理员编辑专题
      *
-     * @param topic xxx
+     * @param topicPo xxx
      * @param id    xxx
      * @return xxx
      */
     @PutMapping("/topics/{id}")
-    public Object update(@RequestBody Topic topic, @PathVariable Integer id) {
-        if (topic == null) {
+    public Object update(@RequestBody TopicPo topicPo, @PathVariable Integer id) {
+        if (topicPo == null) {
             return ResponseUtil.fail();
         }
-        topic.setId(id);
-        topicService.updateTopic(topic);
+        topicPo.setId(id);
+        topicService.updateTopic(topicPo);
         return ResponseUtil.ok();
     }
 
@@ -95,10 +99,11 @@ public class TopicController {
      */
     @DeleteMapping("/topics/{id}")
     public Object delete(@PathVariable Integer id) {
-        Topic topic = new Topic();
-        topic.setId(id);
-        topicService.deleteTopic(topic);
-        return ResponseUtil.ok(topic);
+        if(id<=0)
+        {
+            return ResponseUtil.badArgumentValue();
+        }
+        topicService.deleteTopic(id);
+        return ResponseUtil.ok();
     }
-
 }

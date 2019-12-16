@@ -37,7 +37,7 @@ class TopicControllerTest {
     @Test
     void detail() {
         try {
-            mockMvc.perform(MockMvcRequestBuilders.get("/topicsService/topics"))
+            mockMvc.perform(MockMvcRequestBuilders.get("/topics"))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andDo(MockMvcResultHandlers.print());
         } catch (Exception e) {

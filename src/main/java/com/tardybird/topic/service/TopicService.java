@@ -1,6 +1,7 @@
 package com.tardybird.topic.service;
 
 import com.tardybird.topic.domain.Topic;
+import com.tardybird.topic.po.TopicPo;
 
 /**
  * @author nick
@@ -27,21 +28,21 @@ public interface TopicService {
     /**
      * add topic
      *
-     * @param topic object
+     * @param topicPo object
      */
-    void addTopic(Topic topic);
+    void addTopic(TopicPo topicPo);
 
     /**
      * xxx
      *
-     * @param topic topic object
+     * @param topicPo topic object
      */
-    void updateTopic(Topic topic);
+    void updateTopic(TopicPo topicPo);
 
     /**
      * xxx
      *
-     * @param topic topic object
+     * @param id topic object
      */
-    void deleteTopic(Topic topic);
+    void deleteTopic(Integer id);
 }

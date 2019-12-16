@@ -1,8 +1,10 @@
 package com.tardybird.topic.mapper;
 
 import com.tardybird.topic.po.TopicPo;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
  */
 @Component
 @Mapper
+@Repository
 public interface TopicMapper {
 
     /**
@@ -21,7 +24,7 @@ public interface TopicMapper {
      * @return a topic
      */
     @Select("select id,gmt_create,gmt_modified,is_deleted,pic_url_list,content " +
-            "from topic where id=#{id} and is_deleted=0 ")
+            "from oomall_topic where id=#{id} and is_deleted=0 ")
     @Results(id = "topic", value = {
             @Result(property = "id", column = "id", javaType = Integer.class),
             @Result(property = "gmtCreate", column = "gmt_create", javaType = LocalDateTime.class),
@@ -38,34 +41,31 @@ public interface TopicMapper {
      * @return x
      */
     @Select("select id,gmt_create,gmt_modified,is_deleted,pic_url_list,content " +
-            "from topic where is_deleted=0 ")
+            "from oomall_topic where is_deleted=0 ")
     @ResultMap(value = "topic")
     List<TopicPo> getTopics();
 
     /**
      * add topic
      *
-     * @param topic a vo
+     * @param topicPo a vo
      */
-    @Insert("insert into topic(gmt_create,gmt_modified,is_deleted,pic_url_list,content)" +
+    @Insert("insert into oomall_topic(gmt_create,gmt_modified,is_deleted,pic_url_list,content)" +
             "values(now(),now(),0,#{picUrlList},#{content})")
-    void addTopic(TopicPo topic);
+    void addTopic(TopicPo topicPo);
 
     /**
      * xxx
      *
-     * @param topic topic object
+     * @param topicPo topic object
      */
-    @Update("update topic " +
-            "set gmt_create=#{gmtCreate},gmt_modified=#{gmtModified},is_deleted=#{beDeleted}," +
-            "pic_url_list=#{picUrlList},content=#{content} where id=#{id} and is_deleted=0 ")
-    void updateTopic(TopicPo topic);
+    int updateTopic(TopicPo topicPo);
 
     /**
      * xxx
      *
-     * @param topic topic object
+     * @param
      */
-    @Update("update topic set is_deleted=1 where id=#{id}")
-    void deleteTopic(TopicPo topic);
+    @Update("update oomall_topic set is_deleted=1 where id=#{id}")
+    void deleteTopic(Integer id);
 }

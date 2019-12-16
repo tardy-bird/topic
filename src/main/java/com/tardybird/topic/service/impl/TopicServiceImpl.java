@@ -29,6 +29,10 @@ public class TopicServiceImpl implements TopicService {
     public Topic getTopicDetail(Integer id) {
         TopicPo topicPo = topicMapper.getTopicDetail(id);
 
+        if(topicPo==null)
+        {
+            return null;
+        }
         Topic topic = ObjectConversion.topicPo2Topic(topicPo);
 
         // 图片URL已经隐含在picUrlList中
@@ -40,8 +44,11 @@ public class TopicServiceImpl implements TopicService {
     public Object getTopics(Integer page, Integer limit) {
 
         PageHelper.startPage(page, limit);
-
         List<TopicPo> topicPos = topicMapper.getTopics();
+        if(topicPos==null)
+        {
+            return null;
+        }
         List<Topic> topics = new ArrayList<>();
 
         for (TopicPo topicPo : topicPos) {
@@ -55,21 +62,19 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public void addTopic(Topic topic) {
-        TopicPo topicPo = ObjectConversion.topic2TopicPo(topic);
+    public void addTopic(TopicPo topicPo) {
+
         topicMapper.addTopic(topicPo);
     }
 
     @Override
-    public void updateTopic(Topic topic) {
-        TopicPo topicPo = ObjectConversion.topic2TopicPo(topic);
+    public void updateTopic(TopicPo topicPo) {
         topicMapper.updateTopic(topicPo);
     }
 
     @Override
-    public void deleteTopic(Topic topic) {
-        TopicPo topicPo = ObjectConversion.topic2TopicPo(topic);
-        topicMapper.deleteTopic(topicPo);
+    public void deleteTopic(Integer id) {
+        topicMapper.deleteTopic(id);
     }
 
 }
