@@ -1,7 +1,6 @@
 package com.tardybird.topic.mapper;
 
 import com.tardybird.topic.po.TopicPo;
-import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -59,6 +58,8 @@ public interface TopicMapper {
      *
      * @param topicPo topic object
      */
+    @Update("update oomall_topic set gmt_modified=now(),is_deleted=#{beDeleted}," +
+            "pic_url_list=#{picUrlList},content=#{content} where id=#{id}")
     int updateTopic(TopicPo topicPo);
 
     /**

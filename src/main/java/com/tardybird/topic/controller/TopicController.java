@@ -101,7 +101,7 @@ public class TopicController {
     @PutMapping("/topics/{id}")
     public Object update(@RequestBody TopicPo topicPo, @PathVariable Integer id) {
         if (id <= 0) {
-            return ResponseUtil.fail();
+            return ResponseUtil.badArgumentValue();
         }
         Log log;
         if (topicPo == null) {
@@ -128,6 +128,7 @@ public class TopicController {
         if (id <= 0) {
             log = new Log.LogBuilder().type(1).actions("管理员删除专题").status(0).build();
             logClient.addLog(log);
+
             return ResponseUtil.badArgumentValue();
         }
         log = new Log.LogBuilder().type(1).actions("管理员删除专题").status(1).build();
