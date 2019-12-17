@@ -4,9 +4,22 @@ spring:
     username: oomall
     password: oomallp@$$w0rd
     driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: Topic
 server:
   port: 8090
 
 mybatis:
   type-aliases-package: com.tardybird.topic.po
   mapper-locations: classpath:mapper/*.xml
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://47.96.159.71:8888/eureka/
+  instance:
+    prefer-ip-address: true
+    #    ip-address: 47.96.159.71
+    non-secure-port: 8090
+#
+#    ip-address: localhost
