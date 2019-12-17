@@ -38,9 +38,11 @@ public class TopicController {
     public Object list(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit) {
         Log log;
-        if (page == null || limit == null || page < 0 || limit < 0) {
-
+        if (page == null || limit == null) {
             return ResponseUtil.badArgument();
+        }
+        if (page < 0 || limit <= 0) {
+            return ResponseUtil.badArgumentValue();
         }
         Object object = topicService.getTopics(page, limit);
         return ResponseUtil.ok(object);
@@ -55,8 +57,7 @@ public class TopicController {
     @GetMapping("/topics/{id}")
     public Object detail(@NotNull @PathVariable Integer id) {
         Log log;
-        if(id<=0)
-        {
+        if (id <= 0) {
             log = new Log.LogBuilder().type(0).actions("查看一个专题").status(0).actionId(id).build();
             logClient.addLog(log);
             return ResponseUtil.badArgumentValue();
@@ -82,9 +83,7 @@ public class TopicController {
             logClient.addLog(log);
             return ResponseUtil.fail();
         }
-//        if (topicPo.getPicUrlList() == null || topicPo.getContent() == null) {
-//            return ResponseUtil.badArgument();
-//        }
+
         topicService.addTopic(topicPo);
         log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(1).build();
         logClient.addLog(log);
@@ -96,11 +95,14 @@ public class TopicController {
      * 管理员编辑专题
      *
      * @param topicPo xxx
-     * @param id    xxx
+     * @param id      xxx
      * @return xxx
      */
     @PutMapping("/topics/{id}")
     public Object update(@RequestBody TopicPo topicPo, @PathVariable Integer id) {
+        if (id <= 0) {
+            return ResponseUtil.fail();
+        }
         Log log;
         if (topicPo == null) {
             log = new Log.LogBuilder().type(1).actions("管理员编辑专题").status(0).build();
@@ -123,8 +125,7 @@ public class TopicController {
     @DeleteMapping("/topics/{id}")
     public Object delete(@PathVariable Integer id) {
         Log log;
-        if(id<=0)
-        {
+        if (id <= 0) {
             log = new Log.LogBuilder().type(1).actions("管理员删除专题").status(0).build();
             logClient.addLog(log);
             return ResponseUtil.badArgumentValue();
