@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
  * @author nick
  */
 @RestController
+@RequestMapping("/logService")
 public class TopicController {
 
     private final

@@ -12,8 +12,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+
 @Component
-@FeignClient(name = "Log")
+@FeignClient(name = "logService")
 public interface LogClient {
     /**
      * x

@@ -5,7 +5,7 @@ spring:
     password: oomallp@$$w0rd
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
-    name: Topic
+    name: topicService
 server:
   port: 8090
 
