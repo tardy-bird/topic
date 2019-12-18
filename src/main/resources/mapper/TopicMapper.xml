@@ -10,6 +10,11 @@
         <result property="content" column="content"/>
     </resultMap>
 
+    <insert id="addTopic" parameterType="TopicPo" useGeneratedKeys="true" keyProperty="id">
+        insert into oomall_topic(gmt_create,gmt_modified,is_deleted,pic_url_list,content)
+        values(now(),now(),0,#{picUrlList},#{content})
+    </insert>
+
     <update id="updateTopic" parameterType="TopicPo">
         update oomall_topic
         <set>
@@ -25,4 +30,20 @@
         </set>
         where id=#{id} and is_deleted=0
     </update>
+
+    <update id="deleteTopic" parameterType="java.lang.Integer">
+        update oomall_topic
+        set is_deleted=1 where id=#{id}
+    </update>
+
+    <select id="getTopics" parameterType="java.lang.Integer" resultMap="TopicPo">
+        select id,gmt_create,gmt_modified,is_deleted,pic_url_list,content
+        from oomall_topic
+        where is_deleted=0
+    </select>
+
+    <select id="getTopicDetail" parameterType="java.lang.Integer" resultMap="TopicPo">
+        select id,gmt_create,gmt_modified,is_deleted,pic_url_list,content
+            from oomall_topic where id=#{id} and is_deleted=0
+    </select>
 </mapper>

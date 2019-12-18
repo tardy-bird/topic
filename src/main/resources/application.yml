@@ -1,11 +1,8 @@
-
 pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
   helper-dialect: mysql
-
-
 
 spring:
   datasource:
@@ -13,6 +10,9 @@ spring:
     username: oomall
     password: oomallp@$$w0rd
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
   application:
     name: topicService
 server:
@@ -28,5 +28,5 @@ eureka:
       defaultZone: http://47.96.159.71:8888/eureka/
   instance:
     prefer-ip-address: true
-    ip-address: 121.199.2.219
+    ip-address: 47.96.159.71
     non-secure-port: 8830

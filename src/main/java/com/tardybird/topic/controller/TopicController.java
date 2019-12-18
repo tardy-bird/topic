@@ -6,7 +6,6 @@ import com.tardybird.topic.domain.Topic;
 import com.tardybird.topic.po.TopicPo;
 import com.tardybird.topic.service.impl.TopicServiceImpl;
 import com.tardybird.topic.util.ResponseUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -17,14 +16,12 @@ import javax.validation.constraints.NotNull;
 @RestController
 public class TopicController {
 
-    private final
-    TopicServiceImpl topicService;
+    final TopicServiceImpl topicService;
+    final LogClient logClient;
 
-    @Autowired
-    LogClient logClient;
-
-    public TopicController(TopicServiceImpl topicService) {
+    public TopicController(TopicServiceImpl topicService, LogClient logClient) {
         this.topicService = topicService;
+        this.logClient = logClient;
     }
 
     /**
@@ -39,13 +36,18 @@ public class TopicController {
                        @RequestParam(defaultValue = "10") Integer limit) {
         Log log;
         if (page == null || limit == null || page < 0 || limit < 0) {
+
             log = new Log.LogBuilder().type(0).actions("查看专题").status(0).build();
             logClient.addLog(log);
+
             return ResponseUtil.cantFind();
         }
+
         log = new Log.LogBuilder().type(0).actions("查看专题").status(1).build();
         logClient.addLog(log);
+
         Object object = topicService.getTopics(page, limit);
+
         return ResponseUtil.ok(object);
     }
 
@@ -58,21 +60,27 @@ public class TopicController {
     @GetMapping("/topics/{id}")
     public Object detail(@NotNull @PathVariable Integer id) {
         Log log;
-        if(id<=0)
-        {
+        if (id <= 0) {
+
             log = new Log.LogBuilder().type(0).actions("查看一个专题").status(0).actionId(id).build();
             logClient.addLog(log);
+
             return ResponseUtil.cantFind();
         }
+
         Topic topic = topicService.getTopicDetail(id);
-        if(topic==null)
-        {
+
+        if (topic == null) {
+
             log = new Log.LogBuilder().type(0).actions("查看一个专题").status(0).actionId(id).build();
             logClient.addLog(log);
+
             return ResponseUtil.cantFind();
         }
+
         log = new Log.LogBuilder().type(0).actions("查看一个专题").status(1).actionId(id).build();
         logClient.addLog(log);
+
         return ResponseUtil.ok(topic);
     }
 
@@ -86,15 +94,21 @@ public class TopicController {
     @PostMapping("/topics")
     public Object create(@RequestBody TopicPo topicPo) {
         Log log;
+
         if (topicPo.getContent() == null) {
+
             log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(0).build();
             logClient.addLog(log);
+
             return ResponseUtil.failAdd();
         }
-        topicService.addTopic(topicPo);
+
+        TopicPo topic = topicService.addTopic(topicPo);
+
         log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(1).build();
         logClient.addLog(log);
-        return ResponseUtil.ok(topicPo);
+
+        return ResponseUtil.ok(topic);
     }
 
 
@@ -102,22 +116,28 @@ public class TopicController {
      * 管理员编辑专题
      *
      * @param topicPo xxx
-     * @param id    xxx
+     * @param id      xxx
      * @return xxx
      */
     @PutMapping("/topics/{id}")
     public Object update(@RequestBody TopicPo topicPo, @PathVariable Integer id) {
         Log log;
         if (topicPo == null) {
+
             log = new Log.LogBuilder().type(1).actions("管理员编辑专题").status(0).build();
             logClient.addLog(log);
+
             return ResponseUtil.failUpdate();
         }
+
         log = new Log.LogBuilder().type(1).actions("管理员编辑专题").status(1).build();
         logClient.addLog(log);
+
         topicPo.setId(id);
-        topicService.updateTopic(topicPo);
-        return ResponseUtil.ok(topicPo);
+
+        TopicPo topic = topicService.updateTopic(topicPo);
+
+        return ResponseUtil.ok(topic);
     }
 
     /**
@@ -129,15 +149,19 @@ public class TopicController {
     @DeleteMapping("/topics/{id}")
     public Object delete(@PathVariable Integer id) {
         Log log;
-        if(id<=0)
-        {
+        if (id <= 0) {
+
             log = new Log.LogBuilder().type(1).actions("管理员删除专题").status(0).build();
             logClient.addLog(log);
+
             return ResponseUtil.failDelete();
         }
+
         log = new Log.LogBuilder().type(1).actions("管理员删除专题").status(1).build();
         logClient.addLog(log);
+
         topicService.deleteTopic(id);
-        return ResponseUtil.ok();
+
+        return ResponseUtil.ok(id);
     }
 }

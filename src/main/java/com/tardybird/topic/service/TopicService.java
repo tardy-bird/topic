@@ -26,18 +26,20 @@ public interface TopicService {
     Object getTopics(Integer page, Integer limit);
 
     /**
-     * add topic
+     * x
      *
-     * @param topicPo object
+     * @param topicPo x
+     * @return x
      */
-    void addTopic(TopicPo topicPo);
+    TopicPo addTopic(TopicPo topicPo);
 
     /**
-     * xxx
+     * x
      *
-     * @param topicPo topic object
+     * @param topicPo x
+     * @return x
      */
-    void updateTopic(TopicPo topicPo);
+    TopicPo updateTopic(TopicPo topicPo);
 
     /**
      * xxx

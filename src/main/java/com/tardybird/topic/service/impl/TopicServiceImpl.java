@@ -29,8 +29,7 @@ public class TopicServiceImpl implements TopicService {
     public Topic getTopicDetail(Integer id) {
         TopicPo topicPo = topicMapper.getTopicDetail(id);
 
-        if(topicPo==null)
-        {
+        if (topicPo == null) {
             return null;
         }
         Topic topic = ObjectConversion.topicPo2Topic(topicPo);
@@ -45,8 +44,7 @@ public class TopicServiceImpl implements TopicService {
 
         PageHelper.startPage(page, limit);
         List<TopicPo> topicPos = topicMapper.getTopics();
-        if(topicPos==null)
-        {
+        if (topicPos == null) {
             return null;
         }
         List<Topic> topics = new ArrayList<>();
@@ -62,14 +60,24 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public void addTopic(TopicPo topicPo) {
+    public TopicPo addTopic(TopicPo topicPo) {
 
         topicMapper.addTopic(topicPo);
+
+        Integer id = topicPo.getId();
+
+        return topicMapper.getTopicDetail(id);
     }
 
     @Override
-    public void updateTopic(TopicPo topicPo) {
+    public TopicPo updateTopic(TopicPo topicPo) {
         topicMapper.updateTopic(topicPo);
+
+        Integer id = topicPo.getId();
+
+        topicPo = topicMapper.getTopicDetail(id);
+
+        return topicPo;
     }
 
     @Override
