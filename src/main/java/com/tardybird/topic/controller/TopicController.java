@@ -41,9 +41,9 @@ public class TopicController {
         if (page == null || limit == null || page < 0 || limit < 0) {
             log = new Log.LogBuilder().type(0).actions("查看专题").status(0).build();
             logClient.addLog(log);
-            return ResponseUtil.badArgument();
+            return ResponseUtil.cantFind();
         }
-        log = new Log.LogBuilder().type(0).actions("查看一个专题").status(1).build();
+        log = new Log.LogBuilder().type(0).actions("查看专题").status(1).build();
         logClient.addLog(log);
         Object object = topicService.getTopics(page, limit);
         return ResponseUtil.ok(object);
@@ -62,9 +62,15 @@ public class TopicController {
         {
             log = new Log.LogBuilder().type(0).actions("查看一个专题").status(0).actionId(id).build();
             logClient.addLog(log);
-            return ResponseUtil.badArgumentValue();
+            return ResponseUtil.cantFind();
         }
         Topic topic = topicService.getTopicDetail(id);
+        if(topic==null)
+        {
+            log = new Log.LogBuilder().type(0).actions("查看一个专题").status(0).actionId(id).build();
+            logClient.addLog(log);
+            return ResponseUtil.cantFind();
+        }
         log = new Log.LogBuilder().type(0).actions("查看一个专题").status(1).actionId(id).build();
         logClient.addLog(log);
         return ResponseUtil.ok(topic);
@@ -80,10 +86,10 @@ public class TopicController {
     @PostMapping("/topics")
     public Object create(@RequestBody TopicPo topicPo) {
         Log log;
-        if (topicPo == null) {
+        if (topicPo.getContent() == null) {
             log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(0).build();
             logClient.addLog(log);
-            return ResponseUtil.fail();
+            return ResponseUtil.failAdd();
         }
         topicService.addTopic(topicPo);
         log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(1).build();
@@ -105,7 +111,7 @@ public class TopicController {
         if (topicPo == null) {
             log = new Log.LogBuilder().type(1).actions("管理员编辑专题").status(0).build();
             logClient.addLog(log);
-            return ResponseUtil.fail();
+            return ResponseUtil.failUpdate();
         }
         log = new Log.LogBuilder().type(1).actions("管理员编辑专题").status(1).build();
         logClient.addLog(log);
@@ -127,7 +133,7 @@ public class TopicController {
         {
             log = new Log.LogBuilder().type(1).actions("管理员删除专题").status(0).build();
             logClient.addLog(log);
-            return ResponseUtil.badArgumentValue();
+            return ResponseUtil.failDelete();
         }
         log = new Log.LogBuilder().type(1).actions("管理员删除专题").status(1).build();
         logClient.addLog(log);
