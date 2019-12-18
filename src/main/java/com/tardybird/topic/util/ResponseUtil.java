@@ -131,5 +131,12 @@ public class ResponseUtil {
     public static Object unAuthorized() {
         return fail(506, "无操作权限");
     }
-}
 
+    public static Object cantFind(){return fail(650,"该话题是无效话题");}
+
+    public static Object failUpdate(){return fail(651,"话题更新失败");}
+
+    public static Object failAdd(){return fail(651,"话题添加失败");}
+
+    public static Object failDelete(){return fail(652,"话题删除失败");}
+}
