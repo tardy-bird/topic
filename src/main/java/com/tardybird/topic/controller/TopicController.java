@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
  * @author nick
  */
 @RestController
-@RequestMapping("/logService")
 public class TopicController {
 
     private final
@@ -40,9 +39,12 @@ public class TopicController {
                        @RequestParam(defaultValue = "10") Integer limit) {
         Log log;
         if (page == null || limit == null || page < 0 || limit < 0) {
-
+            log = new Log.LogBuilder().type(0).actions("查看专题").status(0).build();
+            logClient.addLog(log);
             return ResponseUtil.badArgument();
         }
+        log = new Log.LogBuilder().type(0).actions("查看一个专题").status(1).build();
+        logClient.addLog(log);
         Object object = topicService.getTopics(page, limit);
         return ResponseUtil.ok(object);
     }
@@ -83,13 +85,10 @@ public class TopicController {
             logClient.addLog(log);
             return ResponseUtil.fail();
         }
-//        if (topicPo.getPicUrlList() == null || topicPo.getContent() == null) {
-//            return ResponseUtil.badArgument();
-//        }
         topicService.addTopic(topicPo);
         log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(1).build();
         logClient.addLog(log);
-        return ResponseUtil.ok();
+        return ResponseUtil.ok(topicPo);
     }
 
 
@@ -112,7 +111,7 @@ public class TopicController {
         logClient.addLog(log);
         topicPo.setId(id);
         topicService.updateTopic(topicPo);
-        return ResponseUtil.ok();
+        return ResponseUtil.ok(topicPo);
     }
 
     /**

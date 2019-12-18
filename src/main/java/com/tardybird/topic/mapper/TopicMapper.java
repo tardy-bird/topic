@@ -55,16 +55,15 @@ public interface TopicMapper {
     void addTopic(TopicPo topicPo);
 
     /**
-     * xxx
-     *
-     * @param topicPo topic object
+     *更新主题
+     * @param topicPo
+     * @return
      */
     int updateTopic(TopicPo topicPo);
 
     /**
-     * xxx
-     *
-     * @param
+     * 删除主题
+     * @param id
      */
     @Update("update oomall_topic set is_deleted=1 where id=#{id}")
     void deleteTopic(Integer id);
