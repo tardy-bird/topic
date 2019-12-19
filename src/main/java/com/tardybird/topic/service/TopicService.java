@@ -9,42 +9,42 @@ import com.tardybird.topic.po.TopicPo;
 public interface TopicService {
 
     /**
-     * topic detail
+     * 获取专题详情
      *
-     * @param id topic id
+     * @param id 专题ID
      * @return a topic
      */
     Topic getTopicDetail(Integer id);
 
     /**
-     * xx
+     * 获取专题列表
      *
-     * @param page  x
-     * @param limit x
-     * @return x
+     * @param page  页数
+     * @param limit 每一页的最大数量
+     * @return Topic列表
      */
     Object getTopics(Integer page, Integer limit);
 
     /**
-     * x
+     * 新建专题
      *
-     * @param topicPo x
-     * @return x
+     * @param topicPo TopicPo
+     * @return TopicPo
      */
     TopicPo addTopic(TopicPo topicPo);
 
     /**
-     * x
+     * 更新专题
      *
-     * @param topicPo x
-     * @return x
+     * @param topicPo TopicPo
+     * @return TopicPo
      */
     TopicPo updateTopic(TopicPo topicPo);
 
     /**
-     * xxx
+     * 删除专题
      *
-     * @param id topic object
+     * @param id 专题ID
      */
     void deleteTopic(Integer id);
 }

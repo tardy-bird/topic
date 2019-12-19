@@ -1,25 +1,21 @@
 package com.tardybird.topic.client;
 
-/**
- * @author DIX
- * @version 1.0
- * @description
- * @date 2019/12/17 14:38
- */
 import com.tardybird.topic.domain.Log;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
+/**
+ * @author nick
+ */
 @Component
 @FeignClient(name = "logService")
 public interface LogClient {
     /**
-     * x
+     * 调用日志模块，将管理员操作写到日志
      *
-     * @param log x
+     * @param log 日志对象
      */
     @PostMapping("/log")
     void addLog(@RequestBody Log log);

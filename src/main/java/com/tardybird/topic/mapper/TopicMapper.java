@@ -16,38 +16,38 @@ import java.util.List;
 public interface TopicMapper {
 
     /**
-     * topic details
+     * 获取专题详情
      *
-     * @param id topic id
+     * @param id 专题ID
      * @return a topic
      */
     TopicPo getTopicDetail(Integer id);
 
     /**
-     * x
+     * 获取专题列表
      *
-     * @return x
+     * @return Topic列表
      */
     List<TopicPo> getTopics();
 
     /**
-     * add topic
+     * 新建专题
      *
-     * @param topicPo x
+     * @param topicPo TopicPo
      */
     void addTopic(TopicPo topicPo);
 
     /**
-     * 更新主题
+     * 更新专题
      *
-     * @param topicPo x
+     * @param topicPo TopicPo
      */
     void updateTopic(TopicPo topicPo);
 
     /**
-     * 删除主题
+     * 删除专题
      *
-     * @param id x
+     * @param id 专题ID
      */
     void deleteTopic(Integer id);
 }

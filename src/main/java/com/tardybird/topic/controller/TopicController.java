@@ -88,8 +88,8 @@ public class TopicController {
     /**
      * 管理员添加专题
      *
-     * @param topicPo xxx
-     * @return xxx
+     * @param topicPo TopicPo
+     * @return TopicPo
      */
     @PostMapping("/topics")
     public Object create(@RequestBody TopicPo topicPo) {
@@ -115,36 +115,38 @@ public class TopicController {
     /**
      * 管理员编辑专题
      *
-     * @param topicPo xxx
-     * @param id      xxx
-     * @return xxx
+     * @param topicPo TopicPo
+     * @param id      专题ID
+     * @return TopicPo
      */
     @PutMapping("/topics/{id}")
     public Object update(@RequestBody TopicPo topicPo, @PathVariable Integer id) {
         Log log;
-        if (topicPo == null) {
+        if (topicPo.getContent() != null || topicPo.getPicUrlList() != null) {
 
-            log = new Log.LogBuilder().type(1).actions("管理员编辑专题").status(0).build();
+            log = new Log.LogBuilder().type(1).actions("管理员编辑专题").status(1).build();
             logClient.addLog(log);
 
-            return ResponseUtil.failUpdate();
+            topicPo.setId(id);
+
+            TopicPo topic = topicService.updateTopic(topicPo);
+
+            return ResponseUtil.ok(topic);
+
         }
 
-        log = new Log.LogBuilder().type(1).actions("管理员编辑专题").status(1).build();
+        log = new Log.LogBuilder().type(1).actions("管理员编辑专题").status(0).build();
         logClient.addLog(log);
 
-        topicPo.setId(id);
+        return ResponseUtil.failUpdate();
 
-        TopicPo topic = topicService.updateTopic(topicPo);
-
-        return ResponseUtil.ok(topic);
     }
 
     /**
      * 管理员删除专题
      *
-     * @param id xxx
-     * @return xxx
+     * @param id 专题ID
+     * @return 操作状态
      */
     @DeleteMapping("/topics/{id}")
     public Object delete(@PathVariable Integer id) {
