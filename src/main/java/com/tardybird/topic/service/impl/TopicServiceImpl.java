@@ -6,6 +6,7 @@ import com.tardybird.topic.domain.Topic;
 import com.tardybird.topic.mapper.TopicMapper;
 import com.tardybird.topic.po.TopicPo;
 import com.tardybird.topic.service.TopicService;
+import com.tardybird.topic.util.JacksonUtil;
 import com.tardybird.topic.util.ObjectConversion;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,10 @@ public class TopicServiceImpl implements TopicService {
 
         for (TopicPo topicPo : topicPos) {
             Topic topic = ObjectConversion.topicPo2Topic(topicPo);
-            topic.setPictures(null);
+
+            String jsonUrl = topicPo.getPicUrlList();
+            List<String> pictures = JacksonUtil.parseStringList(jsonUrl, "pictures");
+            topic.setPictures(pictures);
 
             topics.add(topic);
         }

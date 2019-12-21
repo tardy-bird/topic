@@ -31,9 +31,9 @@ public class TopicController {
      * @param limit 分页大小
      * @return 专题列表
      */
-    @GetMapping("/topics")
-    public Object list(@RequestParam(defaultValue = "1") Integer page,
-                       @RequestParam(defaultValue = "10") Integer limit) {
+    @GetMapping("/admin/topics")
+    public Object listAdmin(@RequestParam(defaultValue = "1") Integer page,
+                            @RequestParam(defaultValue = "10") Integer limit) {
         Log log;
         if (page == null || limit == null || page < 0 || limit < 0) {
 
@@ -51,13 +51,26 @@ public class TopicController {
         return ResponseUtil.ok(object);
     }
 
+    @GetMapping("/topics")
+    public Object list(@RequestParam(defaultValue = "1") Integer page,
+                       @RequestParam(defaultValue = "10") Integer limit) {
+        Log log;
+        if (page == null || limit == null || page < 0 || limit < 0) {
+            return ResponseUtil.cantFind();
+        }
+
+        Object object = topicService.getTopics(page, limit);
+
+        return ResponseUtil.ok(object);
+    }
+
     /**
      * 用户获取专题详情
      *
      * @param id 专题ID
      * @return 专题详情
      */
-    @GetMapping("/topics/{id}")
+    @GetMapping("/admin/topics/{id}")
     public Object detail(@NotNull @PathVariable Integer id) {
         Log log;
         if (id <= 0) {
@@ -95,13 +108,13 @@ public class TopicController {
     public Object create(@RequestBody TopicPo topicPo) {
         Log log;
 
-        if (topicPo.getContent() == null) {
-
-            log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(0).build();
-            logClient.addLog(log);
-
-            return ResponseUtil.failAdd();
-        }
+//        if (topicPo.getContent() == null) {
+//
+//            log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(0).build();
+//            logClient.addLog(log);
+//
+//            return ResponseUtil.failAdd();
+//        }
 
         TopicPo topic = topicService.addTopic(topicPo);
 
