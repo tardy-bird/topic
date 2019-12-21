@@ -25,22 +25,23 @@ public class TopicController {
     }
 
     /**
-     * 用户获取专题列表
+     * 获取专题列表
      *
      * @param page  分页页数
      * @param limit 分页大小
      * @return 专题列表
      */
     @GetMapping("/admin/topics")
-    public Object listAdmin(@RequestParam(defaultValue = "1") Integer page,
-                            @RequestParam(defaultValue = "10") Integer limit) {
+    public Object listTopicsOfAdmin(@RequestParam(defaultValue = "1") Integer page,
+                                    @RequestParam(defaultValue = "10") Integer limit) {
         Log log;
-        if (page == null || limit == null || page < 0 || limit < 0) {
+
+        if (page < 0 || limit < 0) {
 
             log = new Log.LogBuilder().type(0).actions("查看专题").status(0).build();
             logClient.addLog(log);
 
-            return ResponseUtil.cantFind();
+            return ResponseUtil.badArgument();
         }
 
         log = new Log.LogBuilder().type(0).actions("查看专题").status(1).build();
@@ -55,8 +56,8 @@ public class TopicController {
     public Object list(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit) {
         Log log;
-        if (page == null || limit == null || page < 0 || limit < 0) {
-            return ResponseUtil.cantFind();
+        if (page < 0 || limit < 0) {
+            return ResponseUtil.badArgument();
         }
 
         Object object = topicService.getTopics(page, limit);
@@ -78,7 +79,7 @@ public class TopicController {
             log = new Log.LogBuilder().type(0).actions("查看一个专题").status(0).actionId(id).build();
             logClient.addLog(log);
 
-            return ResponseUtil.cantFind();
+            return ResponseUtil.badArgument();
         }
 
         Topic topic = topicService.getTopicDetail(id);
@@ -88,7 +89,7 @@ public class TopicController {
             log = new Log.LogBuilder().type(0).actions("查看一个专题").status(0).actionId(id).build();
             logClient.addLog(log);
 
-            return ResponseUtil.cantFind();
+            return ResponseUtil.topicNotFound();
         }
 
         log = new Log.LogBuilder().type(0).actions("查看一个专题").status(1).actionId(id).build();
@@ -108,13 +109,13 @@ public class TopicController {
     public Object create(@RequestBody TopicPo topicPo) {
         Log log;
 
-//        if (topicPo.getContent() == null) {
-//
-//            log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(0).build();
-//            logClient.addLog(log);
-//
-//            return ResponseUtil.failAdd();
-//        }
+        if (topicPo.getContent() == null && topicPo.getPicUrlList() == null) {
+
+            log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(0).build();
+            logClient.addLog(log);
+
+            return ResponseUtil.failAdd();
+        }
 
         TopicPo topic = topicService.addTopic(topicPo);
 
@@ -169,7 +170,7 @@ public class TopicController {
             log = new Log.LogBuilder().type(1).actions("管理员删除专题").status(0).build();
             logClient.addLog(log);
 
-            return ResponseUtil.failDelete();
+            return ResponseUtil.badArgument();
         }
 
         log = new Log.LogBuilder().type(1).actions("管理员删除专题").status(1).build();
@@ -177,6 +178,6 @@ public class TopicController {
 
         topicService.deleteTopic(id);
 
-        return ResponseUtil.ok(id);
+        return ResponseUtil.ok();
     }
 }
