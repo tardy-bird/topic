@@ -41,14 +41,14 @@ public class ResponseUtil {
     }
 
     public static Object failAdd() {
-        return fail(651, "话题添加失败");
+        return fail(652, "话题添加失败");
     }
 
     public static Object failDelete() {
-        return fail(652, "话题删除失败");
+        return fail(653, "话题删除失败");
     }
 
     public static Object topicNotFound() {
-        return fail(654, "话题查看失败");
+        return fail(650, "话题查看失败");
     }
 }

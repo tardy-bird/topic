@@ -113,7 +113,6 @@ public class TopicController {
 
         if (topic == null) {
 
-
             return ResponseUtil.topicNotFound();
         }
 
@@ -139,8 +138,6 @@ public class TopicController {
         }
 
         TopicPo topic = topicService.addTopic(topicPo);
-
-//        TopicPo topicPo1 = topicService.doLast();
 
         log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(1).build();
         logClient.addLog(log);
