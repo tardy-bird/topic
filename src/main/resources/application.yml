@@ -44,9 +44,9 @@ eureka:
 #  datasource:
 #    hikari:
 #      maximum-pool-size: 10
-#    url: jdbc:mysql://148.70.28.112/wowomall?useUnicode=true&characterEncoding=utf8&useSSL=false
-#    username: wowoto
-#    password: zqhlovekly
+#    url: jdbc:mysql://47.52.88.176/DB2_1?useUnicode=true&characterEncoding=utf8&useSSL=false
+#    username: user2_1
+#    password: ooad1
 #  application:
 #    name: topicService
 #server:
@@ -59,10 +59,10 @@ eureka:
 #eureka:
 #  client:
 #    service-url:
-#      defaultZone: http://148.70.28.112:8761/eureka/
+#      defaultZone: http://139.196.253.120:8761/eureka/
 #  instance:
 #    prefer-ip-address: true
-#    ip-address: 121.199.2.219
+#    ip-address: 47.96.159.71
 #    non-secure-port: 8831
 
 

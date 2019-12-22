@@ -5,6 +5,7 @@ import com.tardybird.topic.domain.Log;
 import com.tardybird.topic.domain.Topic;
 import com.tardybird.topic.po.TopicPo;
 import com.tardybird.topic.service.impl.TopicServiceImpl;
+import com.tardybird.topic.util.ObjectConversion;
 import com.tardybird.topic.util.ResponseUtil;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,6 +66,7 @@ public class TopicController {
         return ResponseUtil.ok(object);
     }
 
+
     /**
      * 用户获取专题详情
      *
@@ -99,6 +101,25 @@ public class TopicController {
     }
 
 
+    @GetMapping("/topics/{id}")
+    public Object detailUser(@NotNull @PathVariable Integer id) {
+        Log log;
+        if (id <= 0) {
+
+            return ResponseUtil.badArgument();
+        }
+
+        Topic topic = topicService.getTopicDetail(id);
+
+        if (topic == null) {
+
+
+            return ResponseUtil.topicNotFound();
+        }
+
+        return ResponseUtil.ok(topic);
+    }
+
     /**
      * 管理员添加专题
      *
@@ -119,9 +140,12 @@ public class TopicController {
 
         TopicPo topic = topicService.addTopic(topicPo);
 
+//        TopicPo topicPo1 = topicService.doLast();
+
         log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(1).build();
         logClient.addLog(log);
 
+        topic = ObjectConversion.topicPo2Topic(topic);
         return ResponseUtil.ok(topic);
     }
 

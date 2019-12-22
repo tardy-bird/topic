@@ -47,4 +47,6 @@ public interface TopicService {
      * @param id 专题ID
      */
     void deleteTopic(Integer id);
+
+//    TopicPo doLast();
 }

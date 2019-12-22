@@ -35,9 +35,6 @@ public class ResponseUtil {
         return fail(580, "参数不合法");
     }
 
-    public static Object cantFind() {
-        return fail(650, "该话题是无效话题");
-    }
 
     public static Object failUpdate() {
         return fail(651, "话题更新失败");
