@@ -5,7 +5,6 @@ import com.tardybird.topic.domain.Log;
 import com.tardybird.topic.domain.Topic;
 import com.tardybird.topic.po.TopicPo;
 import com.tardybird.topic.service.impl.TopicServiceImpl;
-import com.tardybird.topic.util.ObjectConversion;
 import com.tardybird.topic.util.ResponseUtil;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +35,6 @@ public class TopicController {
     public Object listTopicsOfAdmin(@RequestParam(defaultValue = "1") Integer page,
                                     @RequestParam(defaultValue = "10") Integer limit) {
         Log log;
-
         if (page < 0 || limit < 0) {
 
             log = new Log.LogBuilder().type(0).actions("查看专题").status(0).build();
@@ -56,7 +54,6 @@ public class TopicController {
     @GetMapping("/topics")
     public Object list(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit) {
-        Log log;
         if (page < 0 || limit < 0) {
             return ResponseUtil.badArgument();
         }
@@ -103,16 +100,13 @@ public class TopicController {
 
     @GetMapping("/topics/{id}")
     public Object detailUser(@NotNull @PathVariable Integer id) {
-        Log log;
         if (id <= 0) {
-
             return ResponseUtil.badArgument();
         }
 
         Topic topic = topicService.getTopicDetail(id);
 
         if (topic == null) {
-
             return ResponseUtil.topicNotFound();
         }
 
@@ -137,12 +131,11 @@ public class TopicController {
             return ResponseUtil.failAdd();
         }
 
-        TopicPo topic = topicService.addTopic(topicPo);
+        Topic topic = topicService.addTopic(topicPo);
 
         log = new Log.LogBuilder().type(1).actions("管理员添加专题").status(1).build();
         logClient.addLog(log);
 
-        topic = ObjectConversion.topicPo2Topic(topic);
         return ResponseUtil.ok(topic);
     }
 

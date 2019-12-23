@@ -6,7 +6,8 @@ import com.tardybird.topic.domain.Topic;
 import com.tardybird.topic.mapper.TopicMapper;
 import com.tardybird.topic.po.TopicPo;
 import com.tardybird.topic.service.TopicService;
-import com.tardybird.topic.util.ObjectConversion;
+import com.tardybird.topic.util.Converter;
+import com.tardybird.topic.util.TopicConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,8 +19,9 @@ import java.util.List;
 @Service
 public class TopicServiceImpl implements TopicService {
 
-    private final
-    TopicMapper topicMapper;
+    final TopicMapper topicMapper;
+
+    final Converter<TopicPo, Topic> topicConverter = new TopicConverter();
 
     public TopicServiceImpl(TopicMapper topicMapper) {
         this.topicMapper = topicMapper;
@@ -32,10 +34,12 @@ public class TopicServiceImpl implements TopicService {
         if (topicPo == null) {
             return null;
         }
-        Topic topic = ObjectConversion.topicPo2Topic(topicPo);
+
+        Topic topic = topicConverter.converterFromPo(topicPo);
 
         // 图片URL已经隐含在picUrlList中
         topic.setPictures(null);
+
         return topic;
     }
 
@@ -44,17 +48,19 @@ public class TopicServiceImpl implements TopicService {
 
         PageHelper.startPage(page, limit);
         List<TopicPo> topicPos = topicMapper.getTopics();
+
         if (topicPos == null) {
             return null;
         }
+
         List<Topic> topics = new ArrayList<>();
 
         for (TopicPo topicPo : topicPos) {
-            Topic topic = ObjectConversion.topicPo2Topic(topicPo);
 
-            String jsonUrl = topicPo.getPicUrlList();
-//            List<String> pictures = JacksonUtil.parseStringList(jsonUrl, "pictures");
-//            topic.setPictures(pictures);
+            Topic topic = topicConverter.converterFromPo(topicPo);
+
+            // 直接解析picUrlList，不需要转成URL列表
+            topic.setPictures(null);
 
             topics.add(topic);
         }
@@ -63,23 +69,18 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public TopicPo addTopic(TopicPo topicPo) {
-
+    public Topic addTopic(TopicPo topicPo) {
         topicMapper.addTopic(topicPo);
-
         Integer id = topicPo.getId();
-
-        return topicMapper.getTopicDetail(id);
+        TopicPo po = topicMapper.getTopicDetail(id);
+        return topicConverter.converterFromPo(po);
     }
 
     @Override
     public TopicPo updateTopic(TopicPo topicPo) {
         topicMapper.updateTopic(topicPo);
-
         Integer id = topicPo.getId();
-
         topicPo = topicMapper.getTopicDetail(id);
-
         return topicPo;
     }
 
@@ -87,11 +88,5 @@ public class TopicServiceImpl implements TopicService {
     public void deleteTopic(Integer id) {
         topicMapper.deleteTopic(id);
     }
-
-//    @Override
-//    public TopicPo doLast() {
-//        return topicMapper.doLast();
-//    }
-
 
 }

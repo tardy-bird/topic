@@ -31,7 +31,7 @@ public interface TopicService {
      * @param topicPo TopicPo
      * @return TopicPo
      */
-    TopicPo addTopic(TopicPo topicPo);
+    Topic addTopic(TopicPo topicPo);
 
     /**
      * 更新专题
@@ -48,5 +48,4 @@ public interface TopicService {
      */
     void deleteTopic(Integer id);
 
-//    TopicPo doLast();
 }

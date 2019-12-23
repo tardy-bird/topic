@@ -51,5 +51,4 @@ public interface TopicMapper {
      */
     void deleteTopic(Integer id);
 
-    TopicPo doLast();
 }
