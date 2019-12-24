@@ -11,7 +11,7 @@ import java.util.function.Function;
 public class TopicConverter extends Converter<TopicPo, Topic> {
 
     public TopicConverter() {
-        super(new TopicPoFunction(), null);
+        super(new TopicPoFunction(), new TopicFunction());
     }
 
     static class TopicPoFunction implements Function<TopicPo, Topic> {
@@ -23,6 +23,10 @@ public class TopicConverter extends Converter<TopicPo, Topic> {
          */
         @Override
         public Topic apply(TopicPo topicPo) {
+
+            if (topicPo == null) {
+                return null;
+            }
 
             Topic topic = new Topic();
             topic.setId(topicPo.getId());
@@ -45,6 +49,10 @@ public class TopicConverter extends Converter<TopicPo, Topic> {
          */
         @Override
         public TopicPo apply(Topic topic) {
+
+            if (topic == null) {
+                return null;
+            }
 
             TopicPo topicPo = new TopicPo();
             topicPo.setId(topic.getId());
