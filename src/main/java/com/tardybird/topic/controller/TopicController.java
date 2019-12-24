@@ -98,6 +98,12 @@ public class TopicController {
     }
 
 
+    /**
+     * 用户获取专题详情
+     *
+     * @param id 专题ID
+     * @return 专题详情
+     */
     @GetMapping("/topics/{id}")
     public Object detailUser(@NotNull @PathVariable Integer id) {
         if (id <= 0) {

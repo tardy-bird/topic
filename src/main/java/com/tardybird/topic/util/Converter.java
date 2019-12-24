@@ -5,14 +5,20 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
+ * 转换器，主要是PO和Domain层对象的转换
+ *
  * @author nick
  */
 public class Converter<T, U> {
 
-    // from T to U
+    /**
+     * from T to U
+     */
     private Function<T, U> fromPo;
 
-    // from U to T
+    /**
+     * from U to T
+     */
     private Function<U, T> fromDomain;
 
     public Converter(final Function<T, U> fromPo, Function<U, T> fromDomain) {

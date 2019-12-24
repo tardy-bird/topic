@@ -134,3 +134,38 @@ eureka:
 #    prefer-ip-address: true
 #    ip-address: 121.199.2.219
 #    non-secure-port: 8833
+
+
+
+##################################################################
+# LLH
+#pagehelper:
+#  reasonable: true
+#  support-methods-arguments: true
+#  params: count=countSql
+#  helper-dialect: mysql
+#
+#spring:
+#  datasource:
+#    hikari:
+#      maximum-pool-size: 10
+#    url: jdbc:mysql://47.52.88.176/DB1_8?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=GMT%2B8
+#    username: user1_8
+#    password: ooad8
+#  application:
+#    name: topicService
+#server:
+#  port: 8834
+#
+#mybatis:
+#  type-aliases-package: com.tardybird.topic.po
+#  mapper-locations: classpath:mapper/*.xml
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://139.196.212.100:8761/eureka/
+#  instance:
+#    prefer-ip-address: true
+#    ip-address: 47.96.159.71
+#    non-secure-port: 8834

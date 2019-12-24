@@ -47,7 +47,4 @@
             from oomall_topic where id=#{id} and is_deleted=0
     </select>
 
-    <!--    <select id="doLast" resultMap="TopicPo">-->
-    <!--        select * from oomall_topic where id=max(id) and is_deleted=0-->
-    <!--    </select>-->
 </mapper>
